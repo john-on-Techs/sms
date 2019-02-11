@@ -1,0 +1,121 @@
+{% extends "sms/base.html" %} {% block title %} SMS|Home {% endblock title %}{% load crispy_forms_tags %} {% block content %} {% if sale_list %}
+
+<div class="row">
+    <div class="col-sm-4">
+
+    </div>
+    <div class="col-sm-4">
+
+    </div>
+    <div class="col-sm-4">
+        {% if request.user.is_superuser %}
+        <form method="post" action="{% url 'sms:report'  %}">{% csrf_token %}
+             <input type="hidden" name="qs" value="{{sale_list}}" />
+                    <button  class="btn btn-outline-dark">Generate Report</button>
+
+        </form>
+        <!--<a href="{% url 'sms:report'  %}" role="button" type="submit">Generate Report</a>-->
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-sm-10">
+
+        <table class="table table-striped  table-bordered table-hover">
+            <caption>{% if day %}Entries for {{day}}{% endif %} {% if month %}Entries for {{month|date:"F Y"}}{% endif %} {% if year %} Entries for {{year|date:"Y" }}{% endif %}
+            </caption>
+            <thead class="thead-dark">
+                <tr>
+                    <th>Station</th>
+                    <th>Product</th>
+                    <th>Number of Litres</th>
+                    <th>Price Per Litre</th>
+                    <th>Amount Collected(Ksh.)</th>
+                    <th>Entry Date</th>
+                    <!-- <th>Update Date</th> -->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sale_list%}
+                <tr>
+                    <td scope="row">{{sale.station}}</td>
+                    <td>{{sale.product}}</td>
+                    <td>{{sale.number_of_litres}}</td>
+                    <td>{{sale.price_per_litre}}</td>
+                    <td>{{sale.amount_collected}}</td>
+                    <td>{{sale.entry_at}}</td>
+                    <!-- <td>{{sale.updated_at}}</td> -->
+                    <td><a href="{% url 'sms:detail' sale.pk %}" role='button'>View Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+    <div class="col-sm-2">
+        <div class="card my-4">
+            <h5 class="card-header">Filter by Date</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="list-unstyled mb-0">
+                            {% now 'Y' as current_year %} {% now 'm' as current_month %} {% now 'd' as current_day %} {% now 'W' as current_week %}
+                            <li>
+                                <a href="{% url 'sms:index' %}">Any day</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'sms:archive_day' current_year current_month current_day %}">Today</a>
+                            </li>
+                            <li>
+                                <!--<a href="{% url 'sms:archive_week' current_year   current_week %}">This Week</a>-->
+                            </li>
+                            <li>
+                                <a href="{% url 'sms:sales_month_archive' current_year current_month %}">This Month</a>
+                            </li>
+                            <li>
+                                {% now 'Y' as current_year %}
+                                <a href="{% url 'sms:sales_year_archive' current_year %}">This Year</a>
+
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card my-4">
+            <h5 class="card-header">Filter by Station</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% if station_list %}
+                        <ul>
+                            {% for station in station_list %}
+                            <li><a href="{% url 'sms:by-station' place=station.pk %}">{{station.name}}</a></li>
+                            {% endfor %}
+
+                        </ul>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+{% else %}
+<div class="row">
+    <p>No records</p>
+
+</div>
+{% endif %} {% endblock content %}

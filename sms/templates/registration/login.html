@@ -1,0 +1,26 @@
+{% extends "sms/base.html" %}{% load crispy_forms_tags %} {% block content %}
+
+<div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            <p>Your username and password didn't match.Please try again.</p>
+        </div>
+
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %} {{form|crispy}}
+
+            <button type="submit" class="btn btn-outline-primary" value="login">Submit</button>
+            <input type="hidden" name="next" value="{{next}}" />
+        </form>
+
+    </div>
+
+</div>
+
+
+
+{% endblock content %}

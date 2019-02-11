@@ -1,0 +1,39 @@
+{% load static %} {% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load fontawesome %}
+{{ form.media }}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
+
+    <title>{% block title %}{% endblock title %}</title>
+    {% fontawesome_stylesheet %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'sms/css/bootstrap.min.css' %}"> {% block css %} {% endblock css %}
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        {% include 'sms/nav.html' %} {% block content %} {% endblock content %}
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'sms/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'sms/js/popper.min.js' %}"></script>
+    <script src="{% static 'sms/js/bootstrap.min.js' %} "></script>
+
+    {% block javascript %} {% endblock javascript %}
+</body>
+
+</html>

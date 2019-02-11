@@ -1,0 +1,24 @@
+{% extends 'sms/base.html' %} {% block title %}{{sale.product}}{% endblock title %} {% block content %}
+
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Station: {{sale.station}}</h5>
+                <p class="card-text">Product: {{sale.product}} <br> Litres Sold: {{ sale.number_of_litres }} <em>litres</em> <br> Amount collected: {{ sale.amount_collected}}<br> Station: {{sale.station}}
+                </p>
+                {% if request.user.is_superuser or request.user == sale.author and 'sms.change_salerecord' in request.user.get_all_permissions %}
+                <a href="{% url 'sms:edit' sale.pk %}" class="btn btn-outline-secondary">Edit</a>
+                <a href="{% url 'sms:delete' sale.pk %} " class="btn btn-outline-danger">Delete</a> {% endif %}
+                <a href="{% url 'sms:index' %}" class="btn btn-outline-info" role="button">View all Records</a>
+                <a class="btn btn-outline-dark" href="{% url 'sms:create' %}" role="button">New Record</a>
+                <p class="card-text"><small class="text-muted">Last updated {{sale.entry_at|timesince}}  ago</small></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
