@@ -28,12 +28,12 @@ class Pdf(View):
 
     def post(self, request):
 
-        qs = request.POST.getlist('qs')[0]
-        print(qs)
-        qs2=request.POST.get('qs')
-        print("=====================================\n",qs2)
-        sales = qs
-        print(sales)
+        # qs = request.POST.getlist('qs')[0]
+        # print(qs)
+        # qs2=request.POST.get('qs')
+        # print("=====================================\n",qs2)
+        sales = SaleRecord.objects.all()
+       
         today = timezone.now()
         params = {
             'today': today,
