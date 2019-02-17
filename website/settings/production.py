@@ -36,16 +36,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'rest_framework_swagger',
     'rest_framework',
     'rest_framework.authtoken',
     'sms',
     'crispy_forms',
     # 'sales.apps.SalesConfig',
-    
-]
+    'bootstrap4',
+    'fontawesome',
+    'bootstrap_datepicker_plus',
 
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
